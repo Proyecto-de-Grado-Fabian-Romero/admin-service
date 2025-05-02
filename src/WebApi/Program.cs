@@ -1,4 +1,9 @@
+using AdminService.Src.Application.Interfaces;
+using AdminService.Src.Application.Services;
+using AdminService.Src.Domain.Interfaces;
 using AdminService.Src.Infraestructure.Data;
+using AdminService.Src.Infraestructure.Repositories;
+using AdminService.Src.Infrastructure.Adapters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +35,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHttpClient<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
+
+builder.Services.AddScoped<DbContext, AppDbContext>();
+builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
+builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
 
 var app = builder.Build();
 
