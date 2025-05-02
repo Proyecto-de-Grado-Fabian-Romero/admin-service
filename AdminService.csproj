@@ -27,10 +27,6 @@
 
   <ItemGroup>
     <Folder Include="src/Application/DTOs/Request/" />
-    <Folder Include="src/Application/Services/" />
-    <Folder Include="src/Domain/Interfaces/" />
-    <Folder Include="src/Infraestructure/Repositories/" />
-    <Folder Include="src/WebApi/Controllers/" />
   </ItemGroup>
 
 </Project>
