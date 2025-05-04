@@ -6,14 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdminService.Src.Infraestructure.Repositories;
 
-public class Tour360RequestRepository : ITour360RequestRepository
+public class Tour360RequestRepository(AppDbContext context) : ITour360RequestRepository
 {
-    private readonly AppDbContext _context;
-
-    public Tour360RequestRepository(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly AppDbContext _context = context;
 
     public async Task<(List<Tour360Request> Items, int TotalItems)> GetAllAsync(Tour360Status? status, int page, int limit)
     {
@@ -33,5 +28,12 @@ public class Tour360RequestRepository : ITour360RequestRepository
             .ToListAsync();
 
         return (items, totalItems);
+    }
+
+    public async Task<Tour360Request> AddAsync(Tour360Request request)
+    {
+        _context.Tour360Requests.Add(request);
+        await _context.SaveChangesAsync();
+        return request;
     }
 }

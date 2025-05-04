@@ -1,6 +1,8 @@
+using AdminService.src.Application.DTOs.Response;
+
 namespace AdminService.Src.Application.Interfaces;
 
 public interface IEnvironmentServiceAdapter
 {
-    Task<string?> GetEnvironmentNameAsync(Guid environmentPublicId);
+    Task<EnvironmentDetailsResponse?> GetEnvironmentDetailsAsync(Guid environmentPublicId);
 }

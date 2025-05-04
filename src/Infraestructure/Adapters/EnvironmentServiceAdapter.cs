@@ -1,3 +1,4 @@
+using AdminService.src.Application.DTOs.Response;
 using AdminService.Src.Application.Interfaces;
 
 namespace AdminService.Src.Infrastructure.Adapters;
@@ -6,24 +7,17 @@ public class EnvironmentServiceAdapter(HttpClient httpClient) : IEnvironmentServ
 {
     private readonly HttpClient _httpClient = httpClient;
 
-    public async Task<string?> GetEnvironmentNameAsync(Guid environmentPublicId)
+    public async Task<EnvironmentDetailsResponse?> GetEnvironmentDetailsAsync(Guid environmentPublicId)
     {
         var url = $"http://localhost:5150/api/environments/single?publicId={environmentPublicId}";
-
         try
         {
-            var response = await _httpClient.GetFromJsonAsync<EnvironmentResponse>(url);
-
-            return response?.Title;
+            var response = await _httpClient.GetFromJsonAsync<EnvironmentDetailsResponse>(url);
+            return response;
         }
-        catch (Exception)
+        catch
         {
             return null;
         }
-    }
-
-    private class EnvironmentResponse
-    {
-        public string Title { get; set; } = string.Empty;
     }
 }

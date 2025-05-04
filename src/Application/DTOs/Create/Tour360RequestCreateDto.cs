@@ -1,8 +1,8 @@
 using AdminService.Src.Domain.Enums;
 
-namespace AdminService.Src.Application.DTOs.Get;
+namespace AdminService.Src.Application.DTOs.Create;
 
-public class Tour360RequestDto
+public class Tour360RequestCreateDto
 {
     public Guid EnvironmentId { get; set; }
 

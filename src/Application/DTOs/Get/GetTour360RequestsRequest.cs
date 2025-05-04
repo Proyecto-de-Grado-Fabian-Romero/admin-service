@@ -1,6 +1,6 @@
-using AdminService.src.Domain.Enums;
+using AdminService.Src.Domain.Enums;
 
-namespace AdminService.Src.Application.DTOs;
+namespace AdminService.Src.Application.DTOs.Get;
 
 public class GetTour360RequestsRequest
 {

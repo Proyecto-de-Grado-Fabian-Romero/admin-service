@@ -1,4 +1,4 @@
-namespace AdminService.src.Domain.Enums;
+namespace AdminService.Src.Domain.Enums;
 
 public enum Tour360Status
 {

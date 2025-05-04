@@ -1,4 +1,5 @@
-using AdminService.Src.Application.DTOs;
+using AdminService.Src.Application.DTOs.Create;
+using AdminService.Src.Application.DTOs.Get;
 using AdminService.Src.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,5 +21,18 @@ public class Tour360RequestController(ITour360RequestService service) : Controll
             totalItems,
             totalPages = (int)Math.Ceiling((double)totalItems / request.Limit),
         });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] Tour360RequestCreateDto request)
+    {
+        var authenticatedUserId = Request.Cookies["publicId"];
+        if (authenticatedUserId == null)
+        {
+            return Unauthorized();
+        }
+
+        var created = await _service.CreateAsync(request, authenticatedUserId);
+        return CreatedAtAction(nameof(Create), new { id = created.EnvironmentId }, created);
     }
 }
