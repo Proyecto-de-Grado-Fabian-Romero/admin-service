@@ -6,8 +6,6 @@ public class Tour360RequestCreateDto
 {
     public Guid EnvironmentId { get; set; }
 
-    public string EnvironmentName { get; set; } = string.Empty;
-
     public Guid OwnerId { get; set; }
 
     public long RequestDate { get; set; }

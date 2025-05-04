@@ -1,4 +1,4 @@
-using AdminService.src.Domain.Enums;
+using AdminService.Src.Domain.Enums;
 
 namespace AdminService.Src.Domain.Entities;
 

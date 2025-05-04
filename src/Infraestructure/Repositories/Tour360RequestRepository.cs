@@ -1,5 +1,5 @@
 using AdminService.Src.Domain.Entities;
-using AdminService.src.Domain.Enums;
+using AdminService.Src.Domain.Enums;
 using AdminService.Src.Domain.Interfaces;
 using AdminService.Src.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
