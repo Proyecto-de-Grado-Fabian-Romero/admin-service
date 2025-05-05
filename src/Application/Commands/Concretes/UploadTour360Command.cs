@@ -27,18 +27,16 @@ public class UploadTour360Command : ICommand<bool>
     public async Task<bool> ExecuteAsync()
     {
         var tourRequest = await _repository.GetByIdAsync(_tourRequestId)
-                          ?? throw new Exception("Solicitud de Tour no encontrada.");
+                          ?? throw new Exception("360 Tour Request Not Found");
 
         if (tourRequest.Status != Domain.Enums.Tour360Status.Pending &&
             tourRequest.Status != Domain.Enums.Tour360Status.Scheduled)
         {
-            throw new Exception("La solicitud no puede ser subida en el estado actual.");
+            throw new Exception("The Request cannot be Uploaded in Current Status");
         }
 
-        // Primero subir el tour
         await _tourUploaderAdapter.UploadTourAsync(tourRequest.EnvironmentId, _tourUpload);
 
-        // Después actualizar el estado
         tourRequest.Status = Domain.Enums.Tour360Status.Completed;
         await _repository.UpdateAsync(tourRequest);
 

@@ -8,4 +8,6 @@ public interface ITour360RequestService
     Task<(List<Tour360RequestDto> Items, int TotalItems)> GetAllAsync(GetTour360RequestsRequest request);
 
     Task<Tour360RequestDto> CreateAsync(Tour360RequestCreateDto request, string authenticatedUserId);
+
+    Task<bool> Upload360TourAsync(Guid tourRequestId, TourUploadDto uploadDto);
 }

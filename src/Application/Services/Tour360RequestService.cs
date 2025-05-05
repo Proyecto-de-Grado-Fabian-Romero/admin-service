@@ -10,11 +10,14 @@ namespace AdminService.Src.Application.Services;
 public class Tour360RequestService(
     ITour360RequestRepository repository,
     IMapper mapper,
-    IEnvironmentServiceAdapter environmentServiceAdapter) : ITour360RequestService
+    IEnvironmentServiceAdapter environmentServiceAdapter,
+    ITourUploaderAdapter tourUploadAdapter
+    ) : ITour360RequestService
 {
     private readonly ITour360RequestRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
     private readonly IEnvironmentServiceAdapter _environmentServiceAdapter = environmentServiceAdapter;
+    private readonly ITourUploaderAdapter _tourUploadAdapter = tourUploadAdapter;
 
     public async Task<Tour360RequestDto> CreateAsync(Tour360RequestCreateDto request, string authenticatedUserId)
     {
@@ -35,6 +38,17 @@ public class Tour360RequestService(
             _repository,
             _mapper,
             _environmentServiceAdapter);
+
+        return await command.ExecuteAsync();
+    }
+
+    public async Task<bool> Upload360TourAsync(Guid tourRequestId, TourUploadDto uploadDto)
+    {
+        var command = new UploadTour360Command(
+            tourRequestId,
+            uploadDto,
+            _repository,
+            _tourUploadAdapter);
 
         return await command.ExecuteAsync();
     }

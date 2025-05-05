@@ -2,9 +2,9 @@ using AdminService.Src.Application.Interfaces;
 using AdminService.src.Application.Mapping;
 using AdminService.Src.Application.Services;
 using AdminService.Src.Domain.Interfaces;
+using AdminService.Src.Infraestructure.Adapters;
 using AdminService.Src.Infraestructure.Data;
 using AdminService.Src.Infraestructure.Repositories;
-using AdminService.Src.Infrastructure.Adapters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,7 +42,9 @@ builder.Services.AddHttpClient<IEnvironmentServiceAdapter, EnvironmentServiceAda
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
 builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
+
 builder.Services.AddScoped<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
+builder.Services.AddScoped<ITourUploaderAdapter, TourUploaderAdapter>();
 
 builder.Services.AddAutoMapper(typeof(AdminProfile));
 
