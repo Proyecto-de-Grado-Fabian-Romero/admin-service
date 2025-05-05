@@ -35,4 +35,11 @@ public class Tour360RequestController(ITour360RequestService service) : Controll
         var created = await _service.CreateAsync(request, authenticatedUserId);
         return CreatedAtAction(nameof(Create), new { id = created.EnvironmentId }, created);
     }
+
+    [HttpPost("{id}/upload")]
+    public async Task<IActionResult> UploadTour(Guid id, [FromBody] TourUploadDto uploadDto)
+    {
+        await _service.Upload360TourAsync(id, uploadDto);
+        return NoContent();
+    }
 }

@@ -1,7 +1,7 @@
 using AdminService.src.Application.DTOs.Response;
 using AdminService.Src.Application.Interfaces;
 
-namespace AdminService.Src.Infrastructure.Adapters;
+namespace AdminService.Src.Infraestructure.Adapters;
 
 public class EnvironmentServiceAdapter(HttpClient httpClient) : IEnvironmentServiceAdapter
 {
