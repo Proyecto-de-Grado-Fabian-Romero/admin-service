@@ -6,6 +6,8 @@ public class Tour360Request
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
+    public Guid PublicId { get; set; } = Guid.NewGuid();
+
     public Guid EnvironmentId { get; set; }
 
     public Guid OwnerId { get; set; }
