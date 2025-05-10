@@ -12,13 +12,13 @@ public class Tour360Request
 
     public Guid OwnerId { get; set; }
 
-    public long RequestDate { get; set; }
+    public long RequestDate { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
     public long? ScheduledDate { get; set; }
 
     required public Tour360Status Status { get; set; } = Tour360Status.Pending;
 
-    required public string? TechnicianName { get; set; }
+    public string? TechnicianName { get; set; } = string.Empty;
 
-    required public string? Notes { get; set; }
+    public string? Notes { get; set; } = string.Empty;
 }

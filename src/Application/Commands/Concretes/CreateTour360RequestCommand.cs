@@ -37,10 +37,7 @@ public class CreateTour360RequestCommand(
             EnvironmentId = _request.EnvironmentId,
             OwnerId = Guid.Parse(_authenticatedUserId),
             RequestDate = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-            ScheduledDate = _request.ScheduledDate,
             Status = Tour360Status.Pending,
-            TechnicianName = _request.TechnicianName,
-            Notes = _request.Notes,
         };
 
         var createdEntity = await _repository.AddAsync(entity);

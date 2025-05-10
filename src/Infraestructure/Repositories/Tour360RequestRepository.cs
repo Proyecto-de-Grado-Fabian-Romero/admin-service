@@ -40,7 +40,7 @@ public class Tour360RequestRepository(AppDbContext context) : ITour360RequestRep
     public async Task<Tour360Request?> GetByIdAsync(Guid id)
     {
         return await _context.Set<Tour360Request>()
-            .FirstOrDefaultAsync(t => t.Id == id);
+            .FirstOrDefaultAsync(t => t.PublicId == id);
     }
 
     public async Task UpdateAsync(Tour360Request request)

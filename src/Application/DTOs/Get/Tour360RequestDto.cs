@@ -4,6 +4,8 @@ namespace AdminService.Src.Application.DTOs.Get;
 
 public class Tour360RequestDto
 {
+    public Guid PublicId { get; set; }
+
     public Guid EnvironmentId { get; set; }
 
     public string EnvironmentName { get; set; } = string.Empty;
