@@ -5,24 +5,16 @@ using AdminService.Src.Domain.Interfaces;
 
 namespace AdminService.Src.Application.Commands.Concretes;
 
-public class UploadTour360Command : ICommand<bool>
+public class UploadTour360Command(
+    Guid tourRequestId,
+    TourUploadDto tourUpload,
+    ITour360RequestRepository repository,
+    ITourUploaderAdapter tourUploaderAdapter) : ICommand<bool>
 {
-    private readonly Guid _tourRequestId;
-    private readonly TourUploadDto _tourUpload;
-    private readonly ITour360RequestRepository _repository;
-    private readonly ITourUploaderAdapter _tourUploaderAdapter;
-
-    public UploadTour360Command(
-        Guid tourRequestId,
-        TourUploadDto tourUpload,
-        ITour360RequestRepository repository,
-        ITourUploaderAdapter tourUploaderAdapter)
-    {
-        _tourRequestId = tourRequestId;
-        _tourUpload = tourUpload;
-        _repository = repository;
-        _tourUploaderAdapter = tourUploaderAdapter;
-    }
+    private readonly Guid _tourRequestId = tourRequestId;
+    private readonly TourUploadDto _tourUpload = tourUpload;
+    private readonly ITour360RequestRepository _repository = repository;
+    private readonly ITourUploaderAdapter _tourUploaderAdapter = tourUploaderAdapter;
 
     public async Task<bool> ExecuteAsync()
     {

@@ -2,6 +2,7 @@ using AdminService.Src.Application.Commands.Concretes;
 using AdminService.Src.Application.DTOs.Create;
 using AdminService.Src.Application.DTOs.Get;
 using AdminService.Src.Application.Interfaces;
+using AdminService.Src.Domain.Enums;
 using AdminService.Src.Domain.Interfaces;
 using AutoMapper;
 
@@ -50,6 +51,12 @@ public class Tour360RequestService(
             _repository,
             _tourUploadAdapter);
 
+        return await command.ExecuteAsync();
+    }
+
+    public async Task<bool> UpdateStatusAsync(Guid id, Tour360Status newStatus)
+    {
+        var command = new UpdateTour360StatusCommand(id, newStatus, _repository);
         return await command.ExecuteAsync();
     }
 }

@@ -1,5 +1,6 @@
 using AdminService.Src.Application.DTOs.Create;
 using AdminService.Src.Application.DTOs.Get;
+using AdminService.Src.Application.DTOs.Update;
 using AdminService.Src.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,10 +37,17 @@ public class Tour360RequestController(ITour360RequestService service) : Controll
         return CreatedAtAction(nameof(Create), new { id = created.EnvironmentId }, created);
     }
 
-    [HttpPost("{id}/upload")]
+    [HttpPut("{id}/upload")]
     public async Task<IActionResult> UploadTour(Guid id, [FromBody] TourUploadDto uploadDto)
     {
         await _service.Upload360TourAsync(id, uploadDto);
+        return NoContent();
+    }
+
+    [HttpPatch("{id}/status")]
+    public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateTour360StatusDto dto)
+    {
+        await _service.UpdateStatusAsync(id, dto.Status);
         return NoContent();
     }
 }

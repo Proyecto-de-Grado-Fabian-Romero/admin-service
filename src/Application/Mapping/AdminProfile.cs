@@ -13,7 +13,7 @@ public class AdminProfile : Profile
         CreateMap<Tour360Request, Tour360RequestDto>()
             .ForMember(dest => dest.EnvironmentName, opt => opt.Ignore());
 
-        CreateMap<Tour360Request, Tour360RequestCreateDto>();
+        CreateMap<Tour360RequestCreateDto, Tour360Request>();
         CreateMap<Tour360Request, GetTour360RequestsRequest>();
     }
 }
