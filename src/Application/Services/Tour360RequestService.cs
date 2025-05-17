@@ -12,13 +12,15 @@ public class Tour360RequestService(
     ITour360RequestRepository repository,
     IMapper mapper,
     IEnvironmentServiceAdapter environmentServiceAdapter,
-    ITourUploaderAdapter tourUploadAdapter
+    ITourUploaderAdapter tourUploadAdapter,
+    IObjectDetectionAdapter objectDetectionAdapter
     ) : ITour360RequestService
 {
     private readonly ITour360RequestRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
     private readonly IEnvironmentServiceAdapter _environmentServiceAdapter = environmentServiceAdapter;
     private readonly ITourUploaderAdapter _tourUploadAdapter = tourUploadAdapter;
+    private readonly IObjectDetectionAdapter _objectDetectionAdapter = objectDetectionAdapter;
 
     public async Task<Tour360RequestDto> CreateAsync(Tour360RequestCreateDto request, string authenticatedUserId)
     {
@@ -49,7 +51,9 @@ public class Tour360RequestService(
             tourRequestId,
             uploadDto,
             _repository,
-            _tourUploadAdapter);
+            _tourUploadAdapter,
+            _objectDetectionAdapter,
+            _environmentServiceAdapter);
 
         return await command.ExecuteAsync();
     }
