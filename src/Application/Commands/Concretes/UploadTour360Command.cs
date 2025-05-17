@@ -38,6 +38,17 @@ public class UploadTour360Command(
         tourRequest.Status = Tour360Status.Completed;
         await _repository.UpdateAsync(tourRequest);
 
+        var imageUrls = _tourUpload.Scenes
+            .Where(s => !string.IsNullOrWhiteSpace(s.FileUrl))
+            .Select(s => s.FileUrl)
+            .ToList();
+
+        if (imageUrls.Count > 0)
+        {
+            var detectedObjects = await _objectDetectionAdapter.DetectFromImagesAsync(imageUrls);
+            await _environmentServiceAdapter.UpdateDetectedObjectsAsync(tourRequest.EnvironmentId, detectedObjects);
+        }
+
         return true;
     }
 }

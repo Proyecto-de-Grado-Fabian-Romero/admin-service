@@ -44,7 +44,18 @@ builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
 builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
 
 builder.Services.AddScoped<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
+builder.Services.AddScoped<IObjectDetectionAdapter, ObjectDetectionAdapter>();
 builder.Services.AddScoped<ITourUploaderAdapter, TourUploaderAdapter>();
+
+builder.Services.AddHttpClient<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5150");
+});
+
+builder.Services.AddHttpClient<IObjectDetectionAdapter, ObjectDetectionAdapter>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5151");
+});
 
 builder.Services.AddAutoMapper(typeof(AdminProfile));
 

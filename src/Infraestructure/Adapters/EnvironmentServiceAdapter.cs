@@ -9,7 +9,7 @@ public class EnvironmentServiceAdapter(HttpClient httpClient) : IEnvironmentServ
 
     public async Task<EnvironmentDetailsResponse?> GetEnvironmentDetailsAsync(Guid environmentPublicId)
     {
-        var url = $"http://localhost:5150/api/environments/single?publicId={environmentPublicId}";
+        var url = $"/api/environments/single?publicId={environmentPublicId}";
         try
         {
             var response = await _httpClient.GetFromJsonAsync<EnvironmentDetailsResponse>(url);
@@ -19,5 +19,14 @@ public class EnvironmentServiceAdapter(HttpClient httpClient) : IEnvironmentServ
         {
             return null;
         }
+    }
+
+    public async Task UpdateDetectedObjectsAsync(Guid environmentPublicId, Dictionary<string, int> detectedObjects)
+    {
+        var url = $"/api/environments/{environmentPublicId}/detected-objects";
+        var body = new { detectedObjects };
+
+        var response = await _httpClient.PatchAsJsonAsync(url, body);
+        response.EnsureSuccessStatusCode();
     }
 }
