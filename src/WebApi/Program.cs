@@ -42,6 +42,8 @@ builder.Services.AddHttpClient<IEnvironmentServiceAdapter, EnvironmentServiceAda
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
 builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
+builder.Services.AddScoped<IOwnerPaymentService, OwnerPaymentService>();
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 
 builder.Services.AddScoped<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
 builder.Services.AddScoped<IObjectDetectionAdapter, ObjectDetectionAdapter>();
