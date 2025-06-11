@@ -1,12 +1,18 @@
+using AdminService.src.Application.DTOs.Get;
 using AdminService.Src.Application.DTOs.Get;
 using AdminService.Src.Application.Interfaces;
 using AdminService.Src.Domain.Interfaces;
+using AutoMapper;
 
 namespace AdminService.Src.Application.Services;
 
-public class OwnerPaymentService(IOwnerRepository ownerRepository) : IOwnerPaymentService
+public class OwnerPaymentService(IOwnerRepository ownerRepository,
+    IMapper mapper
+) : IOwnerPaymentService
 {
     private readonly IOwnerRepository _ownerRepository = ownerRepository;
+
+    private readonly IMapper _mapper = mapper;
 
     public async Task<OwnerPaymentSummaryDto> GetOwnerPaymentSummaryAsync(string publicId)
     {
@@ -44,6 +50,21 @@ public class OwnerPaymentService(IOwnerRepository ownerRepository) : IOwnerPayme
             TotalEarnings = totalEarnings,
             TotalPaid = totalPaid,
             MonthlyChart = chartData,
+        };
+    }
+
+    public async Task<PaginatedResultDto<OwnerIncomeDto>> GetOwnerIncomeListAsync(string publicId, int page, int limit)
+    {
+        var ownerId = Guid.Parse(publicId);
+
+        var (items, total) = await _ownerRepository.GetPaginatedEarningsAsync(ownerId, page, limit);
+
+        return new PaginatedResultDto<OwnerIncomeDto>
+        {
+            Page = page,
+            Limit = limit,
+            TotalItems = total,
+            Items = _mapper.Map<List<OwnerIncomeDto>>(items),
         };
     }
 }

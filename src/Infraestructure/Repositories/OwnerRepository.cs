@@ -22,4 +22,20 @@ public class OwnerRepository(AppDbContext context) : IOwnerRepository
             .Where(p => p.OwnerId == ownerId)
             .ToListAsync();
     }
+
+    public async Task<(List<OwnerEarning>, int)> GetPaginatedEarningsAsync(Guid ownerId, int page, int limit)
+    {
+        var query = _context.OwnerEarnings
+            .Where(e => e.OwnerId == ownerId)
+            .OrderByDescending(e => e.GeneratedAt);
+
+        var total = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * limit)
+            .Take(limit)
+            .ToListAsync();
+
+        return (items, total);
+    }
 }
