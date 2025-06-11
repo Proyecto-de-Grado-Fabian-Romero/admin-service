@@ -34,4 +34,17 @@ public class OwnerPaymentsController(IOwnerPaymentService service) : ControllerB
         var result = await _service.GetOwnerIncomeListAsync(publicId, page, limit);
         return Ok(result);
     }
+
+    [HttpGet("received")]
+    public async Task<IActionResult> GetReceivedPayments([FromQuery] int page = 1, [FromQuery] int limit = 20)
+    {
+        var publicId = Request.Cookies["publicId"];
+        if (publicId == null)
+        {
+            return Unauthorized();
+        }
+
+        var result = await _service.GetOwnerReceivedPaymentsAsync(publicId, page, limit);
+        return Ok(result);
+    }
 }

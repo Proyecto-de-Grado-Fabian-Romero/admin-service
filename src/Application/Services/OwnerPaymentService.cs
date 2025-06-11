@@ -67,4 +67,19 @@ public class OwnerPaymentService(IOwnerRepository ownerRepository,
             Items = _mapper.Map<List<OwnerIncomeDto>>(items),
         };
     }
+
+    public async Task<PaginatedResultDto<OwnerPaymentReceivedDto>> GetOwnerReceivedPaymentsAsync(string publicId, int page, int limit)
+    {
+        var ownerId = Guid.Parse(publicId);
+
+        var (items, total) = await _ownerRepository.GetPaginatedPaymentsAsync(ownerId, page, limit);
+
+        return new PaginatedResultDto<OwnerPaymentReceivedDto>
+        {
+            Page = page,
+            Limit = limit,
+            TotalItems = total,
+            Items = _mapper.Map<List<OwnerPaymentReceivedDto>>(items),
+        };
+    }
 }

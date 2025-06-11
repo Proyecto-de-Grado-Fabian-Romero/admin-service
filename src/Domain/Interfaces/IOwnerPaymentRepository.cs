@@ -9,4 +9,6 @@ public interface IOwnerRepository
     Task<List<OwnerPayment>> GetPaymentsByOwnerAsync(Guid ownerId);
 
     Task<(List<OwnerEarning> Items, int TotalCount)> GetPaginatedEarningsAsync(Guid ownerId, int page, int limit);
+
+    Task<(List<OwnerPayment> Items, int TotalCount)> GetPaginatedPaymentsAsync(Guid ownerId, int page, int limit);
 }

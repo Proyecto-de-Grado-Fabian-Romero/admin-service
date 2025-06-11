@@ -38,4 +38,20 @@ public class OwnerRepository(AppDbContext context) : IOwnerRepository
 
         return (items, total);
     }
+
+    public async Task<(List<OwnerPayment>, int)> GetPaginatedPaymentsAsync(Guid ownerId, int page, int limit)
+    {
+        var query = _context.OwnerPayments
+            .Where(p => p.OwnerId == ownerId)
+            .OrderByDescending(p => p.CreatedAt);
+
+        var total = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * limit)
+            .Take(limit)
+            .ToListAsync();
+
+        return (items, total);
+    }
 }
