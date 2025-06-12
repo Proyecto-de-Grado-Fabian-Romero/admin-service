@@ -1,6 +1,6 @@
-using AdminService.Src.Application.Commands.Concretes;
 using AdminService.Src.Application.DTOs.Create;
 using AdminService.Src.Application.DTOs.Get;
+using AdminService.Src.Application.DTOs.Get.Admin;
 using AdminService.Src.Domain.Entities;
 using AutoMapper;
 
@@ -15,5 +15,13 @@ public class AdminProfile : Profile
 
         CreateMap<Tour360RequestCreateDto, Tour360Request>();
         CreateMap<Tour360Request, GetTour360RequestsRequest>();
+
+        CreateMap<OwnerDebt, AdminDebtDto>();
+        CreateMap<OwnerPayment, AdminPaymentDto>();
+
+        CreateMap<OwnerDebt, AdminDebtDetailDto>()
+            .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => string.Empty));
+        CreateMap<OwnerPayment, AdminPaymentDetailDto>()
+            .ForMember(dest => dest.Reference, opt => opt.MapFrom(src => src.Reference));
     }
 }
