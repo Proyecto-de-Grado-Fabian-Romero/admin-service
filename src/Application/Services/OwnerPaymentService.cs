@@ -82,4 +82,18 @@ public class OwnerPaymentService(IOwnerRepository ownerRepository,
             Items = _mapper.Map<List<OwnerPaymentReceivedDto>>(items),
         };
     }
+
+    public async Task<OwnerIncomeDetailDto> GetOwnerIncomeDetailsAsync(string publicId, Guid incomeId)
+    {
+        var ownerId = Guid.Parse(publicId);
+        var earning = await _ownerRepository.GetEarningByIdAsync(ownerId, incomeId) ?? throw new Exception("Income not found");
+        return _mapper.Map<OwnerIncomeDetailDto>(earning);
+    }
+
+    public async Task<OwnerPaymentReceivedDetailDto> GetOwnerReceivedPaymentDetailsAsync(string publicId, Guid paymentId)
+    {
+        var ownerId = Guid.Parse(publicId);
+        var payment = await _ownerRepository.GetPaymentByIdAsync(ownerId, paymentId) ?? throw new Exception("Payment not found");
+        return _mapper.Map<OwnerPaymentReceivedDetailDto>(payment);
+    }
 }

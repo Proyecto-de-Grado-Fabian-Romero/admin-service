@@ -54,4 +54,16 @@ public class OwnerRepository(AppDbContext context) : IOwnerRepository
 
         return (items, total);
     }
+
+    public async Task<OwnerEarning?> GetEarningByIdAsync(Guid ownerId, Guid earningId)
+    {
+        return await _context.OwnerEarnings
+            .FirstOrDefaultAsync(e => e.OwnerId == ownerId && e.Id == earningId);
+    }
+
+    public async Task<OwnerPayment?> GetPaymentByIdAsync(Guid ownerId, Guid paymentId)
+    {
+        return await _context.OwnerPayments
+            .FirstOrDefaultAsync(p => p.OwnerId == ownerId && p.Id == paymentId);
+    }
 }

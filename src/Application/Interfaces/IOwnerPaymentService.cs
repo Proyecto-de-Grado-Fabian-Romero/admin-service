@@ -10,4 +10,8 @@ public interface IOwnerPaymentService
     Task<PaginatedResultDto<OwnerIncomeDto>> GetOwnerIncomeListAsync(string publicId, int page, int limit);
 
     Task<PaginatedResultDto<OwnerPaymentReceivedDto>> GetOwnerReceivedPaymentsAsync(string publicId, int page, int limit);
+
+    Task<OwnerIncomeDetailDto> GetOwnerIncomeDetailsAsync(string publicId, Guid incomeId);
+
+    Task<OwnerPaymentReceivedDetailDto> GetOwnerReceivedPaymentDetailsAsync(string publicId, Guid paymentId);
 }
