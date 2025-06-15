@@ -23,5 +23,9 @@ public class AdminProfile : Profile
             .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => string.Empty));
         CreateMap<OwnerPayment, AdminPaymentDetailDto>()
             .ForMember(dest => dest.Reference, opt => opt.MapFrom(src => src.Reference));
+
+        CreateMap<CreateOwnerEarningDto, OwnerEarning>()
+            .ForMember(dest => dest.OwnerId, opt => opt.Ignore())
+            .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(src => src.GeneratedAt));
     }
 }

@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
 {
@@ -44,6 +43,8 @@ builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
 builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
 builder.Services.AddScoped<IOwnerPaymentService, OwnerPaymentService>();
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IOwnerEarningService, OwnerEarningService>();
+builder.Services.AddScoped<IOwnerEarningRepository, OwnerEarningRepository>();
 
 builder.Services.AddScoped<IAdminDebtService, AdminDebtService>();
 builder.Services.AddScoped<IAdminDebtRepository, AdminDebtRepository>();
