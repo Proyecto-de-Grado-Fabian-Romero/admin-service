@@ -5,14 +5,9 @@ namespace AdminService.Src.WebApi.Controllers;
 
 [ApiController]
 [Route("api/admin/payments")]
-public class AdminPaymentsController : ControllerBase
+public class AdminPaymentsController(IAdminPaymentService paymentService) : ControllerBase
 {
-    private readonly IAdminPaymentService _paymentService;
-
-    public AdminPaymentsController(IAdminPaymentService paymentService)
-    {
-        _paymentService = paymentService;
-    }
+    private readonly IAdminPaymentService _paymentService = paymentService;
 
     [HttpGet]
     public async Task<IActionResult> GetAllPayments([FromQuery] int page = 1, [FromQuery] int limit = 20)
