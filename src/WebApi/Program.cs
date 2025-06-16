@@ -50,6 +50,7 @@ builder.Services.AddScoped<IAdminDebtService, AdminDebtService>();
 builder.Services.AddScoped<IAdminDebtRepository, AdminDebtRepository>();
 builder.Services.AddScoped<IAdminPaymentService, AdminPaymentService>();
 builder.Services.AddScoped<IAdminPaymentRepository, AdminPaymentRepository>();
+builder.Services.AddScoped<IOwnerDebtRepository, OwnerDebtRepository>();
 
 builder.Services.AddScoped<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
 builder.Services.AddScoped<IObjectDetectionAdapter, ObjectDetectionAdapter>();
