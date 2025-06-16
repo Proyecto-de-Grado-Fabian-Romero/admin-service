@@ -12,6 +12,7 @@ public class AdminDebtRepository(AppDbContext context) : IAdminDebtRepository
     public async Task<(List<OwnerDebt>, int)> GetPaginatedDebtsAsync(int page, int limit)
     {
         var query = _context.OwnerDebts
+            .Where(d => d.TotalAmount > 0)
             .OrderBy(d => d.UpdatedAt);
 
         var total = await query.CountAsync();
