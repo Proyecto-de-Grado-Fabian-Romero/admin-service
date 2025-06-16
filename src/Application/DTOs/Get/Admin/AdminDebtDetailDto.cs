@@ -12,6 +12,8 @@ public class AdminDebtDetailDto
 
     public Currency Currency { get; set; }
 
+    public string Reference { get; set; } = string.Empty;
+
     public long UpdatedAt { get; set; }
 
     public string OwnerName { get; set; } = string.Empty;
