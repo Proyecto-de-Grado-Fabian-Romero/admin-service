@@ -29,4 +29,10 @@ public class AdminPaymentRepository(AppDbContext context) : IAdminPaymentReposit
         return await _context.OwnerPayments
             .FirstOrDefaultAsync(p => p.Id == paymentId);
     }
+
+    public async Task AddAsync(OwnerPayment ownerPayment)
+    {
+        await _context.OwnerPayments.AddAsync(ownerPayment);
+        await _context.SaveChangesAsync();
+    }
 }

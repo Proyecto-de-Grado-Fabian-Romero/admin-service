@@ -8,4 +8,6 @@ public interface IAdminDebtService
     Task<PaginatedResultDto<AdminDebtDto>> GetOutstandingDebtsAsync(int page, int limit);
 
     Task<AdminDebtDetailDto> GetDebtDetailsAsync(Guid debtId);
+
+    Task<AdminPaymentDetailDto> MarkDebtAsPaidAsync(Guid debtId, string reference);
 }
