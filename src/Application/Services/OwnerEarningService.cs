@@ -43,12 +43,12 @@ public class OwnerEarningService(
         var rows = await _earningRepository.GetMonthlyTotalsAsync(ownerId, fromMs, toMs);
 
         var points = rows.Select(t => new MonthlyEarningPointDto
-            {
-                Year = t.Year,
-                Month = t.Month,
-                Total = t.Total,
-                Currency = "BOB",
-            })
+        {
+            Year = t.Year,
+            Month = t.Month,
+            Total = t.Total,
+            Currency = "BOB",
+        })
             .ToList();
 
         return new MonthlyEarningsResponseDto
