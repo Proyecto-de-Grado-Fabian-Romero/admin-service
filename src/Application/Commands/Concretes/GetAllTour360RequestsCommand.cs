@@ -10,16 +10,22 @@ public class GetAllTour360RequestsCommand(
     GetTour360RequestsRequest request,
     ITour360RequestRepository repository,
     IMapper mapper,
-    IEnvironmentServiceAdapter environmentServiceAdapter) : ICommand<(List<Tour360RequestDto> Items, int TotalItems)>
+    IEnvironmentServiceAdapter environmentServiceAdapter
+) : ICommand<(List<Tour360RequestDto> Items, int TotalItems)>
 {
     private readonly GetTour360RequestsRequest _request = request;
     private readonly ITour360RequestRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
-    private readonly IEnvironmentServiceAdapter _environmentServiceAdapter = environmentServiceAdapter;
+    private readonly IEnvironmentServiceAdapter _environmentServiceAdapter =
+        environmentServiceAdapter;
 
     public async Task<(List<Tour360RequestDto> Items, int TotalItems)> ExecuteAsync()
     {
-        var (entities, totalItems) = await _repository.GetAllAsync(_request.Status, _request.Page, _request.Limit);
+        var (entities, totalItems) = await _repository.GetAllAsync(
+            _request.Status,
+            _request.Page,
+            _request.Limit
+        );
 
         var dtos = new List<Tour360RequestDto>();
 
@@ -27,7 +33,9 @@ public class GetAllTour360RequestsCommand(
         {
             var dto = _mapper.Map<Tour360RequestDto>(entity);
 
-            var environmentInfo = await _environmentServiceAdapter.GetEnvironmentDetailsAsync(entity.EnvironmentId);
+            var environmentInfo = await _environmentServiceAdapter.GetEnvironmentDetailsAsync(
+                entity.EnvironmentId
+            );
             dto.EnvironmentName = environmentInfo?.Title ?? "Nombre no disponible";
 
             dtos.Add(dto);
