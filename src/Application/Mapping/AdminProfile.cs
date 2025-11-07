@@ -1,4 +1,5 @@
 using AdminService.Src.Application.DTOs.Create;
+using AdminService.src.Application.DTOs.Get;
 using AdminService.Src.Application.DTOs.Get;
 using AdminService.Src.Application.DTOs.Get.Admin;
 using AdminService.Src.Domain.Entities;
@@ -30,19 +31,32 @@ public class AdminProfile : Profile
             .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(src => src.GeneratedAt));
 
         CreateMap<CreateOwnerEarningDto, OwnerEarning>()
-             .ForMember(dest => dest.OwnerId, opt => opt.Ignore())
-             .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(src => src.GeneratedAt));
+            .ForMember(dest => dest.OwnerId, opt => opt.Ignore())
+            .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(src => src.GeneratedAt));
 
         CreateMap<OwnerEarning, OwnerDebt>()
-        .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.Amount))
-        .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency))
-        .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()));
+            .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
+            .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.Amount))
+            .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency))
+            .ForMember(
+                dest => dest.UpdatedAt,
+                opt => opt.MapFrom(src => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+            );
 
         CreateMap<OwnerDebt, OwnerPayment>()
             .ForMember(dest => dest.AmountPaid, opt => opt.MapFrom(src => src.TotalAmount))
             .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency))
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
-            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => PaymentMethod.BankTransfer))
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()));
+            .ForMember(
+                dest => dest.PaymentMethod,
+                opt => opt.MapFrom(src => PaymentMethod.BankTransfer)
+            )
+            .ForMember(
+                dest => dest.CreatedAt,
+                opt => opt.MapFrom(src => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+            );
+
+        CreateMap<OwnerEarning, OwnerIncomeDto>();
+        CreateMap<OwnerEarning, OwnerIncomeDetailDto>();
     }
 }

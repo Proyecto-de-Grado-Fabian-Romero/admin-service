@@ -1,10 +1,11 @@
-using System;
 using AdminService.Src.Domain.Enums;
 
 namespace AdminService.src.Application.DTOs.Get;
 
 public class OwnerIncomeDto
 {
+    public Guid Id { get; set; }
+
     public Guid ReservationId { get; set; }
 
     public decimal Amount { get; set; }

@@ -29,11 +29,35 @@ public class OwnerEarningController(IOwnerEarningService service) : ControllerBa
         try
         {
             var createdEarning = await _service.CreateOwnerEarningAsync(ownerId, earningDto);
-            return CreatedAtAction(nameof(CreateOwnerEarning), new { id = createdEarning.Id }, createdEarning);
+            return CreatedAtAction(
+                nameof(CreateOwnerEarning),
+                new { id = createdEarning.Id },
+                createdEarning
+            );
         }
         catch (Exception ex)
         {
             return BadRequest(new { message = ex.Message });
         }
+    }
+
+    [HttpGet("monthly")]
+    public async Task<IActionResult> GetMonthly([FromQuery] long fromMs, [FromQuery] long toMs)
+    {
+        var publicId = Request.Cookies["publicId"];
+        if (string.IsNullOrEmpty(publicId))
+        {
+            return Unauthorized("User not authenticated.");
+        }
+
+        if (fromMs <= 0 || toMs <= 0 || fromMs >= toMs)
+        {
+            return BadRequest("fromMs/toMs inválidos. Deben ser ms UTC y fromMs < toMs.");
+        }
+
+        var ownerId = Guid.Parse(publicId);
+
+        var result = await _service.GetMonthlyEarningsAsync(ownerId, fromMs, toMs);
+        return Ok(result);
     }
 }
