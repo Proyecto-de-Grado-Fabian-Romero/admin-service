@@ -2,15 +2,15 @@ using AdminService.Src.Application.DTOs.Create;
 
 namespace AdminService.Src.Domain.Events;
 
-public record GetEnvironmentDetailsMessage(Guid environmentPublicId, string correlationId);
+public record GetEnvironmentDetailsMessage(Guid EnvironmentPublicId, string CorrelationId);
 
 public record UpdateDetectedObjectsMessage(
-    Guid environmentPublicId,
-    Dictionary<string, int> detectedObjects
+    Guid EnvironmentPublicId,
+    Dictionary<string, int> DetectedObjects
 );
 
 public record UploadTourMessage(
-    Guid environmentPublicId,
-    TourUploadDto tourUpload,
-    string correlationId
+    Guid EnvironmentPublicId,
+    TourUploadDto TourUpload,
+    string CorrelationId
 );

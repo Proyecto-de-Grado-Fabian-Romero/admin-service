@@ -27,10 +27,10 @@ public sealed class EnvironmentsAmqpPublisher : IEnvironmentsPublisher, IDisposa
         var props = _ch.CreateBasicProperties();
         props.DeliveryMode = 2;
         props.ReplyTo = "environments.get.details.response";
-        props.CorrelationId = msg.correlationId;
+        props.CorrelationId = msg.CorrelationId;
 
         Console.WriteLine(
-            $"[Publisher] 📤 Publishing 'get.details' with CorrelationId={msg.correlationId}"
+            $"[Publisher] 📤 Publishing 'get.details' with CorrelationId={msg.CorrelationId}"
         );
         Console.WriteLine($"[Publisher] Exchange={_opt.Exchange} Queue='environments.get.details'");
 
@@ -42,7 +42,7 @@ public sealed class EnvironmentsAmqpPublisher : IEnvironmentsPublisher, IDisposa
     public void PublishUpdateDetectedObjects(UpdateDetectedObjectsMessage msg)
     {
         Console.WriteLine(
-            $"[Publisher] Publishing UpdateDetectedObjects for env={msg.environmentPublicId}"
+            $"[Publisher] Publishing UpdateDetectedObjects for env={msg.EnvironmentPublicId}"
         );
         var body = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(msg);
         var props = _ch.CreateBasicProperties();
@@ -54,11 +54,11 @@ public sealed class EnvironmentsAmqpPublisher : IEnvironmentsPublisher, IDisposa
     {
         Console.WriteLine("[Publisher] Publishing UploadTour");
         Console.WriteLine(
-            $"[Publisher] Publishing UploadTour for env={msg.environmentPublicId}"
+            $"[Publisher] Publishing UploadTour for env={msg.EnvironmentPublicId}"
         );
         var body = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(msg);
         var props = _ch.CreateBasicProperties();
-        props.CorrelationId = msg.correlationId;
+        props.CorrelationId = msg.CorrelationId;
         props.DeliveryMode = 2;
         _ch.BasicPublish(_opt.Exchange, "environments.tours.upload", props, body);
     }
