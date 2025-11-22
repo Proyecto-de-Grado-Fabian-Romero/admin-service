@@ -17,6 +17,8 @@ public class OwnerEarningRepository(AppDbContext context) : IOwnerEarningReposit
             .OwnerDebts.Where(d => d.OwnerId == ownerEarning.OwnerId)
             .FirstOrDefaultAsync();
 
+        Console.WriteLine($"[EARNINGS] Updating debt for OwnerId: {ownerEarning.OwnerId}");
+
         if (ownerDebt != null)
         {
             if (ownerDebt.TotalAmount <= 0)

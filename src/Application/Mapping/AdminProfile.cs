@@ -34,6 +34,8 @@ public class AdminProfile : Profile
             .ForMember(dest => dest.OwnerId, opt => opt.Ignore())
             .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(src => src.GeneratedAt));
 
+        CreateMap<OwnerPayment, OwnerPaymentReceivedDto>();
+
         CreateMap<OwnerEarning, OwnerDebt>()
             .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.OwnerId))
             .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.Amount))

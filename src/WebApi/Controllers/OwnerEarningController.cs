@@ -20,6 +20,8 @@ public class OwnerEarningController(IOwnerEarningService service) : ControllerBa
         }
 
         var ownerId = Guid.Parse(publicId);
+        Console.WriteLine($"Creating earning for OwnerId: {ownerId}");
+        Console.WriteLine($"Earning Amount: {earningDto.OwnerId}");
 
         if (earningDto == null)
         {

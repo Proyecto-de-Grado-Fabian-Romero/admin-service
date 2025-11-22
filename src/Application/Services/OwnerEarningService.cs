@@ -9,13 +9,11 @@ namespace AdminService.Src.Application.Services;
 
 public class OwnerEarningService(
     IOwnerEarningRepository earningRepository,
-    IMapper mapper,
-    IOwnerDebtRepository debtRepository
+    IMapper mapper
 ) : IOwnerEarningService
 {
     private readonly IOwnerEarningRepository _earningRepository = earningRepository;
     private readonly IMapper _mapper = mapper;
-    private readonly IOwnerDebtRepository _debtRepository = debtRepository;
 
     public async Task<OwnerEarning> CreateOwnerEarningAsync(
         Guid ownerId,
@@ -26,10 +24,6 @@ public class OwnerEarningService(
         ownerEarning.OwnerId = ownerId;
 
         await _earningRepository.AddAsync(ownerEarning);
-
-        await _debtRepository.GetByOwnerIdAsync(ownerId);
-
-        Console.WriteLine($"Owner Earning Amount: {ownerEarning.Amount}");
 
         return ownerEarning;
     }
