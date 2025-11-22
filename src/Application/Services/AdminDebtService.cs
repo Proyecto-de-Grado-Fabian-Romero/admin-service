@@ -54,6 +54,7 @@ public class AdminDebtService(
 
         ownerPayment.Reference = reference;
         ownerPayment.CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        ownerPayment.Id = Guid.NewGuid();
 
         await _adminPaymentRepository.AddAsync(ownerPayment);
 
