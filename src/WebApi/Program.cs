@@ -13,10 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 DotNetEnv.Env.Load();
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder
-    .Configuration.SetBasePath(builder.Environment.ContentRootPath)
+builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile(
         $"appsettings.{builder.Environment.EnvironmentName}.json",
         optional: true,
@@ -58,7 +56,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-// Servicios de aplicación
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<ITour360RequestService, Tour360RequestService>();
 builder.Services.AddScoped<ITour360RequestRepository, Tour360RequestRepository>();
@@ -72,17 +69,12 @@ builder.Services.AddScoped<IAdminPaymentService, AdminPaymentService>();
 builder.Services.AddScoped<IAdminPaymentRepository, AdminPaymentRepository>();
 builder.Services.AddScoped<IOwnerDebtRepository, OwnerDebtRepository>();
 
-// Configuración RabbitMQ - CORREGIDO: "RabbitMQ" no "RabbitMq"
-// var rabbitOptions = builder.Configuration.GetSection("RabbitMQ").Get<RabbitMqOptions>();
-// builder.Services.AddSingleton(rabbitOptions);
 builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection("RabbitMQ"));
 
-// Servicios RabbitMQ como SINGLETON
 builder.Services.AddSingleton<IResponseListener, ResponseListener>();
 builder.Services.AddSingleton<INotificationsPublisher, NotificationsAmqpPublisher>();
 builder.Services.AddSingleton<IEnvironmentsPublisher, EnvironmentsAmqpPublisher>();
 
-// SOLO LOS ADAPTERS AMQP - elimina los HTTP clients
 builder.Services.AddScoped<IEnvironmentServiceAdapter, EnvironmentServiceAdapter>();
 builder.Services.AddScoped<ITourUploaderAdapter, TourUploaderAdapter>();
 
@@ -90,11 +82,12 @@ builder.Services.AddAutoMapper(typeof(AdminProfile));
 
 var app = builder.Build();
 
-app.MapControllers();
-app.UseCors("AllowFrontend"); // CORREGIDO: "AllowFrontend" no "AllowFrontEnd"
+app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+app.MapControllers();
+
 app.Run();
